@@ -27,9 +27,11 @@ class Header extends React.Component {
                 <h1 style={{"text-align": "center"}}>Astro Voting App</h1>
                 <div>
                     <p style={this.pStyle}>
+
                         <span style={this.spanStyle}>Sign In </span>
                         <span>&nbsp;or&nbsp;</span> 
                         <span style={this.spanStyle}> Sign Up</span>
+
                     </p>
                 </div>
             </div>
