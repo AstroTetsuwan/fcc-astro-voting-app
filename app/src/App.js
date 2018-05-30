@@ -6,7 +6,7 @@ import Header from './components/Header';
 class App extends Component {
   render() {
     return (
-      <div className="App container-fluid">
+      <div className="container-fluid">
         <Header/>
       </div>
     );
