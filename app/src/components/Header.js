@@ -8,14 +8,30 @@ class Header extends React.Component {
         this.style = {
             backgroundColor: "#222",
             color: "#eee"
-        }
+        };
+
+        this.pStyle = {
+            display: "flex",
+            justifyContent: "flex-end"
+        };
+
+        this.spanStyle = {
+            "color": "#428bca",
+            "cursor": "pointer"
+        };
     }
 
     render(){
         return(
-            <div>
-                <h1>Astro Voting App</h1>
-                <div><span>Sign In</span> or  <span>Sign Up</span></div>
+            <div style={this.style}>
+                <h1 style={{"text-align": "center"}}>Astro Voting App</h1>
+                <div>
+                    <p style={this.pStyle}>
+                        <span style={this.spanStyle}>Sign In </span>
+                        <span>&nbsp;or&nbsp;</span> 
+                        <span style={this.spanStyle}> Sign Up</span>
+                    </p>
+                </div>
             </div>
         );
     }
