@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Header/Header';
-import Main from './Main/Main';
 
 import SignIn from './UserRegistration/SignIn';
 import SignUp from './UserRegistration/SignUp';
