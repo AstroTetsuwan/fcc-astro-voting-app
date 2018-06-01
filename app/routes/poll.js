@@ -25,7 +25,7 @@ router.get('/', function(req, res){
         if(err){console.error(err);}
         res.json(results);
     })
-})  ;
+});
 
 //NEW POLL
 router.post('/', passport.authenticate('jwt', { session: false}), function(req, res) {
