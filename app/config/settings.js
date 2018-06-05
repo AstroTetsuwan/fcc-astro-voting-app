@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "astrowiththeflow"
+    secret: process.env.SECRET_SETTINGS_KEY
 };
