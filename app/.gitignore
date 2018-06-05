@@ -22,4 +22,4 @@ yarn-error.log*
 
 
 .env
-/config/settings.js
+settings.js
