@@ -20,7 +20,9 @@ class SignIn extends React.Component {
         this.formStyle = {
             borderRadius: "10px",
             border: "1px solid #ccc",
-            padding: "5px"
+            padding: "5px",
+            backgroundColor: "#222",
+            color: "#f7a440"
         };
         
         this.state = {username: "", password: "", message: ""};
@@ -44,7 +46,7 @@ class SignIn extends React.Component {
         .then((result) => {
             localStorage.setItem('jwtToken', result.data.token);
             this.setState({ message: ''});
-            this.props.redirection();
+            this.props.redirection(result.data.user);
         })
         .catch((error) => {
             if(error.response.status === 401) {
@@ -73,7 +75,8 @@ class SignIn extends React.Component {
                             placeholder="Enter username" 
                             id="username"
                             name="username"
-                            onChange={this.handleChange}/>
+                            onChange={this.handleChange}
+                            autoFocus/>
                     </div>
                     <div className="form-group">
                         <label>Password:</label>
@@ -85,14 +88,17 @@ class SignIn extends React.Component {
                             onChange={this.handleChange}/>
                     </div>
                     <div style={{display:"flex", justifyContent:"center"}}>
-                        <button type="submit" className="btn btn-primary">Sign in</button>
+                        <button type="submit" style={{color:"#f7a440", backgroundColor:"#EEE"}} 
+                        className="btn btn-default hover-orange-btn">Sign in</button>
                     </div>
                 </form>
-                <p style={{textAlign: "center", margin: "10px"}}>OR</p>
+                <p style={{textAlign: "center", margin: "10px", 
+                            fontSize:"1.5em", color:"#f7a440",}}>OR</p>
                 <div>
                     <button type="button" 
-                        className="btn brn-primary" 
-                        style={{display:"flex", alignItems: "center"}}>
+                        className="btn btn-default hover-orange-btn" 
+                        style={{display:"flex", alignItems: "center",
+                                color:"#f7a440", backgroundColor:"#222"}}>
                         Sign in with Github 
                         <i className="fab fa-github fa-2x" style={{marginLeft: "5px"}}></i>
                     </button>

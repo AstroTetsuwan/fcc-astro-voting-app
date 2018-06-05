@@ -4,38 +4,41 @@ class HeaderButton extends React.Component {
     constructor(props){
         super(props);
 
-        this.state = {color: "#428bca", bgColor: "#222"};    
+        this.logos = {
+            "Home": <i className="fas fa-home"></i>,
+            "Sign In": <i className="fas fa-sign-in-alt"></i>, 
+            "Sign Out": <i className="fas fa-sign-out-alt"></i>,
+            "Sign Up": <i className="fas fa-user-plus"></i>,
+            "My Polls": <i className="fas fa-archive"></i>,
+            "New Poll": <i className="fas fa-plus-square"></i>
+        };
+
+        this.state = {content: this.props.text};   
+         
 
         this.handleMouseOver = this.handleMouseOver.bind(this);
         this.handleMouseOut = this.handleMouseOut.bind(this);
     }
 
     handleMouseOver(){
-        this.setState({color: "#5bc0de", bgColor: "#444"});
+        this.setState({ 
+            content: this.logos[this.props.text]});
     }
 
     handleMouseOut(){
-        this.setState({color: "#428bca", bgColor: "#222"});
+        this.setState({
+            content: this.props.text
+        });
     }
 
     render(){
-        var style = {
-            color: this.state.color,
-            backgroundColor: this.state.bgColor,
-            padding: "2px 5px",
-            margin: "5px",
-            cursor: "pointer",
-            fontSize: "1.2em",
-            border: "1px solid #eee",
-            borderRadius: "5px"
-        };
+        
 
         return(
-            <span style={style}
-                onClick={this.props.userClick}
+            <span onClick={this.props.userClick}
                 onMouseOver={this.handleMouseOver}
                 onMouseOut={this.handleMouseOut}>
-                {this.props.text}    
+                {this.state.content}    
             </span>
         );
     }

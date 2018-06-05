@@ -18,7 +18,9 @@ class SignUp extends React.Component {
         this.formStyle = {
             borderRadius: "10px",
             border: "1px solid #ccc",
-            padding: "5px"
+            padding: "5px",
+            backgroundColor: "#222",
+            color: "#f7a440"
         };
 
         this.state = {
@@ -73,7 +75,8 @@ class SignUp extends React.Component {
                         placeholder="Enter username" 
                         id="username"
                         name="username"
-                        onChange={this.handleChange}/>
+                        onChange={this.handleChange}
+                        autoFocus/>
                 </div>
                 <div className="form-group">
                     <label>Password:</label>
@@ -94,7 +97,8 @@ class SignUp extends React.Component {
                         onChange={this.handleChange}/>
                 </div>
                 <div style={{display:"flex", justifyContent:"center"}}>
-                    <button type="submit" className="btn btn-primary">Sign up</button>
+                    <button type="submit" style={{color: "#f7a440"}}
+                    className="btn btn-default hover-orange-btn">Sign up</button>
                 </div>
             </form>
 

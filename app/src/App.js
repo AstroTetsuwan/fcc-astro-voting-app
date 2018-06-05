@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import axios from 'axios';
 
 import Header from './Header/Header';
 
@@ -8,6 +7,10 @@ import SignIn from './UserRegistration/SignIn';
 import SignUp from './UserRegistration/SignUp';
 
 import PollsGroup from './PollsGroup/PollsGroup';
+import NewPoll from './UserPolls/NewPoll';
+import UserPolls from './UserPolls/UserPolls'
+
+import Poll from './PollDetails/Poll';
 
 
 class App extends Component {
@@ -17,55 +20,36 @@ class App extends Component {
 
     var userLoggedIn = localStorage.getItem("jwtToken") === null ? false : true;
     this.state = {
+      user: null,
       isLoggedIn: userLoggedIn, 
       redirection: []
     };
 
-
-    this.showUserPolls = this.showUserPolls.bind(this);
-    this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignInSubmission = this.handleSignInSubmission.bind(this);
-    this.handleSignUp = this.handleSignUp.bind(this);
     this.handleSignUpSubmission = this.handleSignUpSubmission.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
-    this.getBackHome = this.getBackHome.bind(this);
+  }
+
+  componentDidMount(){
+    const state = this.state;
+    state.isLoggedIn = localStorage.getItem("jwtToken") === null ? false : true;
+    this.setState(state);
   }
 
 
-
-  showUserPolls(){
-    //MAIN COMPONENT == UserPoll
-  }
-
-  showPollDetails(e){
-    //main COMPONENT === pollDetails,  pollId="e.target.id"
-  }
-
-  handleSignIn(){
+  handleSignInSubmission(user){
     this.setState({
-      isLoggedIn: false,
-      redirection: [<Redirect to="/signin"/>]
-    });
-  }
-
-  handleSignInSubmission(){
-    this.setState({
+      user: user,
       isLoggedIn: true,
-      redirection: [<Redirect to="/"/>]
-    });
-  }
-  
-  handleSignUp(){
-    this.setState({
-      isLoggedIn: false,
-      redirection: [<Redirect to="/signup"/>]
+      redirection: <Redirect to="/"/>
     });
   }
 
   handleSignUpSubmission(){
     this.setState({
+      user: null,
       isLoggedIn: false,
-      redirection: [<Redirect to="/signin"/>]
+      redirection: <Redirect to="/signin"/>
     });
   }
 
@@ -74,29 +58,22 @@ class App extends Component {
     window.location.reload();
   }
 
-  getBackHome(){
-    var userLoggedIn = localStorage.getItem("jwtToken") === null ? false : true;
-    this.setState({
-      isLoggedIn: userLoggedIn, 
-      redirection: [<Redirect to="/"/>]
-    });
-  }
 
   render() {
     return (
       <div className="container-fluid">
         
-        <Header showUserPolls={this.showUserPolls}
-                handleSignIn={this.handleSignIn}
-                handleSignUp={this.handleSignUp}
-                handleSignOut={this.handleSignOut}
-                getBackHome={this.getBackHome}
-                isLoggedIn={this.state.isLoggedIn}/>
+        <Header handleSignOut={this.handleSignOut} user={this.state.user}/>
+
         {this.state.redirection}
+
         <Switch>
             <Route exact path="/" component={PollsGroup}/>
             <Route path="/signin" render={() => <SignIn redirection={this.handleSignInSubmission}/>}/>
             <Route path="/signup" render={() => <SignUp redirection={this.handleSignUpSubmission}/>}/>
+            <Route path="/poll/:id" component={Poll}/>
+            <Route path="/newpoll/:userId" component={NewPoll}/>
+            <Route path="/userpoll/:userId" component={UserPolls}/>
         </Switch>
 
       </div>

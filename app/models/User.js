@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
+//without delete first, server crash with error: can't modify model after mongoose compiled it
+delete mongoose.connection.models['User'];
+
 var UserSchema = new mongoose.Schema({
   username: {
         type: String,
@@ -42,4 +45,4 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     });
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema, "users");

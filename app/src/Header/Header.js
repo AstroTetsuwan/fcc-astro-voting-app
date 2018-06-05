@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import { Link } from 'react-router-dom'; 
+
 import HeaderButton from './components/HeaderButton';
 
 class Header extends React.Component {
@@ -8,41 +11,76 @@ class Header extends React.Component {
 
         this.wrapperStyle = {
             backgroundColor: "#222",
-            color: "#eee",
+            color: "#f7a440",
             minHeight:"10vh"
         };
         this.elementsWrapperStyle = {
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            flexFlow: "row wrap"
         };
+
+        this.userGreetingAndButtonWrapperStyle = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexFlow: "column nowrap"
+        };
+
         this.h1Style = {
             margin: "0", 
-            fontSize: "3em",
+            fontSize: "3.2em",
             padding: "10px"
         }; 
     }
 
     isLoggedIn(){
-         return this.props.isLoggedIn ? 
-            [<HeaderButton key={1} userClick={this.props.showUserPolls} text="My Polls"/>,
-            <HeaderButton key={2} userClick={this.props.handleSignOut} text="Sign Out"/>] :
-            [<HeaderButton key={3} userClick={this.props.handleSignIn} text="Sign In"/>,
-            <HeaderButton key={4} userClick={this.props.handleSignUp} text="Sign Up"/>];
+        if(this.props.user !== null){
+            var userPollsLink = "/userpoll/" + this.props.user._id,
+                NewPollLink = "/newpoll/" + this.props.user._id;
+            
+            return [<Link to={userPollsLink} className="navLink" key={1}>
+                        <HeaderButton text="My Polls"/>
+                    </Link>,
+                    <Link to={NewPollLink} className="navLink" key={2}>
+                        <HeaderButton className="navLink" text="New Poll"/>
+                    </Link>,
+                    <Link to="" className="navLink" key={3}>
+                        <HeaderButton className="navLink" userClick={this.props.handleSignOut} text="Sign Out"/>
+                    </Link>];
+        } else{
+         return [<Link to="/signin" className="navLink" key={4}>
+                    <HeaderButton text="Sign In"/>
+                </Link>,
+                <Link to="/signup" className="navLink" key={5}>
+                    <HeaderButton text="Sign Up"/>
+                </Link>];
+        }
     }
 
     render(){
-
         return(
             <div className="row" style={this.wrapperStyle}>
-                <div className="col-xs-12 col-md-9"  style={this.elementsWrapperStyle}>
+                <div className="col-xs-12 col-md-8"  style={this.elementsWrapperStyle}>
                     <h1 style={this.h1Style}>
                         Astro Voting App
                     </h1>
                 </div>
-                <div className="col-xs-12 col-md-3" style={this.elementsWrapperStyle}>
-                    <HeaderButton key={0} userClick={this.props.getBackHome} text="Home"/>    
-                    {this.isLoggedIn()}
+                <div className="col-xs-12 col-md-4" style={this.userGreetingAndButtonWrapperStyle}>
+                    {this.props.user !== null &&
+                        <div style={{margin: "10px 0 -10px 0"}}>
+                            <p style={this.elementsWrapperStyle}>
+                                Welcome {this.props.user.username}
+                            </p>
+                        </div>
+                    }
+                    <div style={this.elementsWrapperStyle}>
+                        <Link to="/" className="navLink" key={0}>
+                            <HeaderButton  text="Home"/>    
+                        </Link>
+                        {this.isLoggedIn()}
+                    </div>
                 </div>
             </div>
         );
